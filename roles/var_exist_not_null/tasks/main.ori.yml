@@ -1,0 +1,83 @@
+---
+# tasks file for orange.hr.assert
+#######################################
+# un template est disponible dans le  #
+# repertoire template avec les emoji  #
+# utilisés                            #
+#######################################
+
+- name: Verification si device est présent
+  ansible.builtin.assert:
+    that:
+      - CI_DEVICE is defined
+    fail_msg:
+      - "⚠️  L'équipement sur lequel on doit lancer le playbook n'est pas défini"
+      - "le nom du 'device' doit être passé en extra paramètre (-e CI_DEVICE) avec le playbook"
+      - "ex: ansible-playbook playbooks/play.yml -e CI_DEVICE=device"
+    success_msg:
+      - "✔️  La variable CI_DEVICE est bien définie"
+  # tags: device
+  when: 
+    - ohrassertDevice is defined
+    - ohrassertDevice
+
+
+- name: "BLOCK : VAULT TOKEN"
+  block:
+    - name: "DEBUG : GET VAULT Token"
+      ansible.builtin.debug:
+        msg: 
+          - "Valeur de ohrassertToken : {{ ohrassertToken }}"
+          - "-> Si la valeur est :  NA (c'est que le fichier '~/.vault-token' n'existe pas)"
+      # on ignore les erreurs, c'est traité dans l'assert en dessous avec plus détail.
+      ignore_errors: yes
+      when: debug or DEBUG
+
+    - name: CHECK VAULT TOKEN
+      ansible.builtin.assert:
+        that:
+          - ohrassertToken|length > 2
+        fail_msg:
+          - "⚠️  Le token VAULT n'existe pas !"
+          - "Si lancemnet via Pipeline GITLAB"
+          - " -> le script pré-ansible-playbook doit générer le token et le poser dans  ~/.vault-token"
+          - "Si lancemnet via env de dev"
+          - " -> Il faut récupérer le token à partir du site web vault et le mettre dans le fichier  ~/.vault-token"
+          - " -> echo 'hvs.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' > ~/.vault-token"
+        success_msg:
+          - "✔️  Le Token Vault a été récupéré avec succès"
+  # tags: vault_token
+  when: 
+    - ohrassertVaultToken is defined
+    - ohrassertVaultToken 
+
+
+- name: Check VAULT Connexion
+  block:
+    - name: Check VAULT Connexion - init
+      vars:
+        # On test la récupération de data dans dev
+        ohrgetvaultPath: "{{ ohrassertPath }}"
+        ohrgetvaultVaultToken: "{{ ohrassertToken }}"
+      ansible.builtin.include_role:
+        name: orange.hr.vault
+      tags: get
+
+    - name: Check VAULT Connexion - Assert
+      ansible.builtin.assert:
+        that:
+          - ohrgetvaultSecret is defined
+          - ohrgetvaultSecret|length > 0
+        fail_msg:
+          - "⚠️  La récupération des secrets VAULT a échoué !"
+          - "-> Vérifier que votre TOKEN a les droits appropriés"
+          - "-> et que le path de récupération des secret est correct"
+        success_msg:
+          - "✔️  La Connexion au VAULT à réussie"
+  #tags: vault_connexion
+  when: 
+    - ohrassertVaultConnexion is defined
+    - ohrassertVaultConnexion 
+
+
+...

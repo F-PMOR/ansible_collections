@@ -1,0 +1,41 @@
+---
+# tasks file for orange.hr.assert
+#######################################
+# un template est disponible dans le  #
+# repertoire template avec les emoji  #
+# utilisés                            #
+#######################################
+
+- name: test roles in collections
+  block:
+
+    - name: Assertion variable
+      ansible.builtin.assert:
+        that:
+          - lookup('ansible.builtin.vars', item) is defined
+          - lookup('ansible.builtin.vars', item)|length >0
+        fail_msg:
+          - "⚠️  {{ failed_msg }}"
+        success_msg:
+          - "✔️  {{ success_msg }}"
+      with_items: "{{ vars_to_check }}"
+      when: not debug|bool
+
+    - name: Assertion variable - mode debug
+      ansible.builtin.assert:
+        that:
+          - lookup('ansible.builtin.vars', item) is defined
+          - lookup('ansible.builtin.vars', item)|length >0
+        fail_msg:
+          - "⚠️  {{ failed_msg }}"
+        success_msg:
+          - "✔️  {{ success_msg }} Valeur : {{ lookup('ansible.builtin.vars', item) }}"
+      with_items: "{{ vars_to_check }}"
+      when: debug|bool
+
+  rescue:
+    - ansible.builtin.debug:
+        msg: "☠️  {{ rescue_msg }}"
+      failed_when: always
+
+...

@@ -1,0 +1,6 @@
+---
+# defaults file for orange.hr.assert
+debug: false
+failed_msg: "var {{ item }} définie mais vide !"
+success_msg: "var {{ item }} bien définie et non vide."
+rescue_msg: "Une variable n'est pas définie ou vide - ARRET du playbook"
