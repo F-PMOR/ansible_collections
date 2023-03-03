@@ -1,8 +1,8 @@
 galaxy_info:
-  role_name: pmorry.assertions.var_exist_not_null
+  role_name: f_pmor.assertions.var_exist_not_null
   author: Philippe Morry
   description: Roles d'assertion pour tester avant de lancer les playbook
-  company: P. morry
+  company: Philippe morry
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value

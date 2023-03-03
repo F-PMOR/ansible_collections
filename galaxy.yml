@@ -2,7 +2,7 @@
 # The namespace of the collection. This can be a company/brand/organization or product namespace under which all
 # content lives. May only contain alphanumeric lowercase characters and underscores. Namespaces cannot start with
 # underscores or numbers and cannot contain consecutive underscores
-namespace: pmorry
+namespace: f_pmor
 
 # The name of the collection. Has the same character restrictions as 'namespace'
 name: assertions
@@ -43,7 +43,7 @@ tags: []
 dependencies: {}
 
 # The URL of the originating SCM repository
-repository: http://example.com/repository
+repository: https://github.com/F-PMOR/ansible_collections
 
 # The URL to any online docs
 documentation: http://docs.example.com
