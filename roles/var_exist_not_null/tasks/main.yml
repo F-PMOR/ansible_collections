@@ -30,7 +30,7 @@
 
   rescue:
     - name: Rescue var_exist_not_null
-    - ansible.builtin.debug:
+      ansible.builtin.debug:
         msg: "☠️  {{ rescue_msg }}"
       failed_when: always
 
