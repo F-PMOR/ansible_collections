@@ -1,15 +1,10 @@
 ---
 # tasks file for orange.hr.assert
-#######################################
-# un template est disponible dans le  #
-# repertoire template avec les emoji  #
-# utilisés                            #
-#######################################
 
-- name: test roles in collections
+- name: "Role Assertion : var_exist_not_null "
   block:
 
-    - name: Assertion variable
+    - name: Assertion var_exist_not_null
       ansible.builtin.assert:
         that:
           - lookup('ansible.builtin.vars', item) is defined
@@ -21,7 +16,7 @@
       with_items: "{{ vars_to_check }}"
       when: not debug|bool
 
-    - name: Assertion variable - mode debug
+    - name: Assertion var_exist_not_null - mode debug
       ansible.builtin.assert:
         that:
           - lookup('ansible.builtin.vars', item) is defined
@@ -34,6 +29,7 @@
       when: debug|bool
 
   rescue:
+    - name: Rescue var_exist_not_null
     - ansible.builtin.debug:
         msg: "☠️  {{ rescue_msg }}"
       failed_when: always

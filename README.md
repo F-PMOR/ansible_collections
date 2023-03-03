@@ -1,10 +1,11 @@
-# Ansible Collection - pmorry.assertions
+# Ansible Collection - f_pmor.assertions
 
 A reusable collection of assertions roles.
 
 
-This collection provide : 
-* `pmorry.assertions/var_exist_not_null` - assertions on vars to check if a var (or list of vars) are well defined and are not null.
+This collection provide :
+
+* `f_pmor.assertions/var_exist_not_null` - assertions on vars to check if a var (or list of vars) are well defined and are not null.
 
 
 ## requirements
@@ -14,7 +15,7 @@ nothing
 Install this collection locally:
 
 ```
-ansible-galaxy collection install pmorry.assertions -p ./collections
+ansible-galaxy collection install f_pmor.assertions -p ./collections
 ```
 Then you can use the roles from the collection in your playbooks.
 
@@ -30,3 +31,8 @@ Another assertions collection is available in ansible galaxy, so the assertions 
 * [marcwrobel collection](https://github.com/marcwrobel/ansible-collection-assertions)
 
  Documentation for the collection.
+
+
+# Comments
+
+this is my first collections, so update will be available quicky with news roles and updates.
