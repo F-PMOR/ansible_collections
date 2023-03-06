@@ -1,0 +1,37 @@
+---
+# tasks file for orange.hr.assert
+
+- name: "Role Assertion : var_exist_not_null "
+  block:
+
+    - name: Assertion var_exist_not_null
+      ansible.builtin.assert:
+        that:
+          - lookup('ansible.builtin.vars', item) is defined
+          - lookup('ansible.builtin.vars', item)|length >0
+        fail_msg:
+          - "⚠️  {{ failed_msg }}"
+        success_msg:
+          - "✔️  {{ success_msg }}"
+      with_items: "{{ vars_to_check }}"
+      when: not debug|bool
+
+    - name: Assertion var_exist_not_null - mode debug
+      ansible.builtin.assert:
+        that:
+          - lookup('ansible.builtin.vars', item) is defined
+          - lookup('ansible.builtin.vars', item)|length >0
+        fail_msg:
+          - "⚠️  {{ failed_msg }}"
+        success_msg:
+          - "✔️  {{ success_msg }} Valeur : {{ lookup('ansible.builtin.vars', item) }}"
+      with_items: "{{ vars_to_check }}"
+      when: debug|bool
+
+  rescue:
+    - name: Rescue var_exist_not_null
+      ansible.builtin.debug:
+        msg: "☠️  {{ rescue_msg }}"
+      failed_when: always
+
+...
