@@ -2,7 +2,7 @@
  "collection_info": {
   "namespace": "f_pmor",
   "name": "assertions",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "authors": [
    "philippe Morry <philippe@morry.fr>"
   ],
