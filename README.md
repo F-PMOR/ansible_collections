@@ -6,7 +6,7 @@ A reusable collection of assertions roles.
 This collection provide :
 
 * `f_pmor.assertions/var_exist_not_null` - assertions on vars to check if a var (or list of vars) are well defined and are not null.
-
+* `f_pmor.assertions/hashi_kv2_test_connect` - assertions to check if the connexion to and hashicorps vault (v2) is passed with success or not.
 
 ## requirements
 nothing
@@ -15,7 +15,7 @@ nothing
 Install this collection locally:
 
 ```
-ansible-galaxy collection install f_pmor.assertions -p ./collections
+ansible-galaxy collection install f_pmor.assertions -p /path/to/collections
 ```
 Then you can use the roles from the collection in your playbooks.
 
