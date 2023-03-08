@@ -36,3 +36,4 @@ Another assertions collection is available in ansible galaxy, so the assertions 
 # Comments
 
 this is my first collections, so update will be available quicky with news roles and updates.
+
