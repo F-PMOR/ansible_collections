@@ -1,0 +1,7 @@
+---
+# defaults file for ping_icmp
+
+# debug: false or true
+debug: false
+# ping '-c' option is mandatory !
+ping_command: ping -c 2 -q -W 1

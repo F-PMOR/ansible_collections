@@ -1,0 +1,37 @@
+---
+# tasks file for ping_icmp
+
+- name: Ping Executing
+  shell: "{{ ping_command }} {{ host_to_ping }}"
+  register: command_output
+  ignore_errors: yes
+  # no_log: true
+  changed_when: false
+
+- name: "DEBUG : Ping icmp Report"
+  vars:
+    command_output_json: "{{ command_output.stdout | community.general.jc('ping') }}"
+  debug: 
+    msg: "{{ command_output.stdout | community.general.jc('ping') }}"
+  when: debug
+
+- name: Ping Report OK
+  vars:
+    command_output_json: "{{ command_output.stdout | community.general.jc('ping') }}"
+    packet_loss_percent_value: "{{ command_output_json['packet_loss_percent'] }}"
+  debug: 
+    msg: "PING OK : packet_loss_percent => {{ packet_loss_percent_value }}"
+  # on affiche ping ok seulement si on a une valeur au niveau du pourcentage de packet loss
+  # si on a pas de valeur, c'est que le ping a échoué.
+  when: 
+    - packet_loss_percent_value
+
+- name: Ping Report KO
+  vars:
+    command_output_json: "{{ command_output.stdout | community.general.jc('ping') }}"
+    packet_loss_percent_value: "{{ command_output_json['packet_loss_percent'] }}"
+  fail: 
+    msg: "PING icmp KO : Host {{ host_to_ping }} not available !!!"
+  # si pas de valeur, ping échoué
+  when: 
+    - not packet_loss_percent_value
