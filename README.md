@@ -7,9 +7,19 @@ This collection provide :
 
 * `f_pmor.assertions/var_exist_not_null` - assertions on vars to check if a var (or list of vars) are well defined and are not null.
 * `f_pmor.assertions/hashi_kv2_test_connect` - assertions to check if the connexion to and hashicorps vault (v2) is passed with success or not.
+* `f_pmor.assertions/ping_icmp` - assertions to check if the target host response to icmp ping (network classique ping not the ssh ping used by ansible ping command.)
 
 ## requirements
-nothing
+
+* To use ping assertions, you need ansible > 2.9 and package below installed in order to use JC .
+
+|  `role : f_pmor.assertions/x` | `requirements`    | `deb package name`  | `ansible collection`  |
+|:-----------------------------:|:------------------|:--------------------|:----------------------|
+|__ping_icmp__                  | ping bash command | iputils-ping        |community.general      |
+|                               | json convert      | jc                  |                       |
+|__hashi_kv2_test_connect__     |                   |                     |community.hashi_vault  |
+
+
 
 ## installing the collection
 Install this collection locally:
@@ -22,7 +32,7 @@ Then you can use the roles from the collection in your playbooks.
 
 ## using
 
-please, have a look in the readme of earch roles
+please, have a look in the readme of each role.
 
 # Other collection of assertions
 
